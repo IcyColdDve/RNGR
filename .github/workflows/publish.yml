@@ -20,7 +20,7 @@ jobs:
 
       - name: Build game
         run: |
-          rojo build --output game.rbxlx
+          rojo build --output rng.rbxlx
 
       - name: Publish to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
