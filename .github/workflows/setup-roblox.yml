@@ -1,0 +1,21 @@
+name: Publish Roblox Game
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Roblox
+        uses: Roblox/setup-roblox@v1
+        with:
+          version: latest
+
+      # ... additional steps for your workflow
