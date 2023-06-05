@@ -1,0 +1,29 @@
+name: Publish Roblox Game
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Roblox
+        uses: Roblox/setup-roblox@v1
+        with:
+          version: latest
+
+      - name: Build game
+        run: |
+          rojo build --output game.rbxlx
+
+      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages
+          folder: game.rbxlx
