@@ -1,0 +1,65 @@
+-- pretty messy code but it works (this is lua)
+
+--Server Side
+local Event = game.ReplicatedStorage:WaitForChild("Tap")
+debounce = false
+
+while true do
+	task.wait(0.4)
+	Event.OnServerEvent:Connect(function(Player) --The player is already passed as the first parameter
+		local live = Player.PlayerGui.Tap["LiveUpdate'"]
+		local tap = Player.PlayerGui.Tap
+		local Text1 = Player.PlayerGui.Tap.Text1
+		local Num = Player.PlayerGui.Tap.Num
+		local cooldown = Player.PlayerGui.Tap.Cooldown
+
+		local Trophy = Player.leaderstats.Trophy
+		local robuxeffect = game.ReplicatedStorage:FindFirstChild("RobuxEffect")
+		local robuxeffect2 = game.ReplicatedStorage:FindFirstChild("RobuxParticles")
+		local particles = false
+
+		while true do
+			task.wait(0.4)
+			live.MouseButton1Click:Connect(function()
+				if debounce == false then
+					debounce = true
+					Num.Visible = true
+					Text1.Visible = true
+						Num.Text = math.random(1,900)
+					Trophy.Value += Num.Text
+					Player.Data.Exp.Value += Num.Text
+					if Num.Text == "0" then
+						Num.Text = "Nothing"
+					end
+					if Num.Text == "Num" then
+						Num.Text = "Nothing"
+					end
+					Player.PlayerGui.Tap.Source.Roll:Play()
+					cooldown.Visible = true
+					live.Visible = false
+				elseif debounce == true then
+					Num.Visible = false
+					Text1.Visible = false
+					cooldown.Text = "Fetching Results.."
+					live.Visible = false
+					wait(5)
+					cooldown.Visible = false
+					Num.Visible = true
+					Text1.Visible = true
+					particles = false
+					task.wait(4)
+					Num.Visible = false
+					Text1.Visible = false
+					cooldown.Visible = true
+					cooldown.Text = "⏰Please wait 10 seconds!"
+					wait(10)
+					cooldown.Visible = true
+					cooldown.Text = "🏆Click here to Roll!"
+					live.Visible = true
+					debounce = false
+					live.Visible = true
+				end
+			end)
+		end
+	end)
+end
